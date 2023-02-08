@@ -2,10 +2,10 @@ import 'package:absolutest/utils/pj_gradients.dart';
 import 'package:absolutest/utils/pj_icons.dart';
 import 'package:flutter/material.dart';
 
-class ScreenLayout extends StatelessWidget {
-  final Widget child;
+class PjScaffold extends StatelessWidget {
+  final Widget body;
 
-  const ScreenLayout({Key? key, required this.child}) : super(key: key);
+  const PjScaffold({Key? key, required this.body}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +37,7 @@ class ScreenLayout extends StatelessWidget {
                 alignment: Alignment.bottomLeft,
                 child: PjIcons().secondBackground,
               ),
-              child,
+              body,
             ],
           ),
         ),
