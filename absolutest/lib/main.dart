@@ -1,4 +1,5 @@
 import 'package:absolutest/screens/login_screen/login_screen_provider.dart';
+import 'package:absolutest/screens/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -22,7 +23,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const LoginScreenProvider(),
+      home: const SplashScreen(),
     );
   }
 }

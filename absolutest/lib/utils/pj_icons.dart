@@ -8,6 +8,10 @@ class PjIcons {
   );
   final SvgPicture secondBackground =
       SvgPicture.asset('assets/icons/back_icon_second.svg');
-  final SvgPicture logo =
-  SvgPicture.asset('assets/icons/logo.svg');
+  final SvgPicture logo = SvgPicture.asset('assets/icons/logo.svg');
+  final SvgPicture backArrow = SvgPicture.asset(
+    'assets/icons/back_arrow.svg',
+  );
+  final SvgPicture errorCircleRounded =
+      SvgPicture.asset('assets/icons/error_circle_rounded.svg');
 }

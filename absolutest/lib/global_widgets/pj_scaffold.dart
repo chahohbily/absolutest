@@ -1,11 +1,25 @@
+import 'dart:developer';
+
 import 'package:absolutest/utils/pj_gradients.dart';
 import 'package:absolutest/utils/pj_icons.dart';
 import 'package:flutter/material.dart';
 
-class PjScaffold extends StatelessWidget {
+class PjScaffold extends StatefulWidget {
   final Widget body;
 
   const PjScaffold({Key? key, required this.body}) : super(key: key);
+
+  @override
+  State<PjScaffold> createState() => _PjScaffoldState();
+}
+
+class _PjScaffoldState extends State<PjScaffold> {
+  late final bool canPop;
+  @override
+  void initState() {
+    canPop = Navigator.of(context).canPop();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,22 +36,37 @@ class PjScaffold extends StatelessWidget {
           backgroundColor: Colors.transparent,
           body: Stack(
             children: [
-              SafeArea(
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 30, top: 10),
-                  child: PjIcons().logo,
-                ),
-              ),
               Positioned(
                 top: -150,
                 left: -100,
                 child: PjIcons().background,
               ),
-              Align(
-                alignment: Alignment.bottomLeft,
+              Positioned(
+                bottom: 0,
+                left: 0,
                 child: PjIcons().secondBackground,
               ),
-              body,
+              SafeArea(
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 30, top: 10),
+                  child: canPop
+                      ? GestureDetector(
+                          behavior: HitTestBehavior.translucent,
+                          onTap: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: Container(
+                            height: 32,
+                            width: 32,
+                            padding: const EdgeInsets.symmetric(vertical: 5),
+                            child: PjIcons().backArrow,
+                          ),
+                          //child: PjIcons().backArrow,
+                        )
+                      : PjIcons().logo,
+                ),
+              ),
+              widget.body,
             ],
           ),
         ),

@@ -39,12 +39,15 @@ class _LoginScreensLayoutState extends State<LoginScreensLayout> {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text(
-                    widget.screenTitle,
-                    style: PjTextStyles.interRegular28.copyWith(
-                      color: PjColors.purple,
+                  SizedBox(
+                    width: 275,
+                    child: Text(
+                      widget.screenTitle,
+                      style: PjTextStyles.interRegular28.copyWith(
+                        color: PjColors.purple,
+                      ),
+                      textAlign: TextAlign.center,
                     ),
-                    textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 40),
                   ClipRRect(

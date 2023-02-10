@@ -1,6 +1,9 @@
 import 'package:absolutest/global_widgets/login_screens_layout.dart';
 import 'package:absolutest/global_widgets/pj_scaffold.dart';
+import 'package:absolutest/global_widgets/pj_text_form_field.dart';
+import 'package:absolutest/screens/new_password_screen/new_password_screen_provider.dart';
 import 'package:absolutest/utils/pj_colors.dart';
+import 'package:absolutest/global_functions/pj_navigator.dart';
 import 'package:absolutest/utils/pj_styles.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -11,8 +14,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class RestorePasswordCodeScreen extends StatelessWidget {
   final String email;
 
-  const RestorePasswordCodeScreen({Key? key, required this.email})
-      : super(key: key);
+  RestorePasswordCodeScreen({Key? key, required this.email}) : super(key: key);
+
+  final TextEditingController _pinController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +33,9 @@ class RestorePasswordCodeScreen extends StatelessWidget {
             return LoginScreensLayout(
               screenTitle: 'Восстановление пароля',
               buttonText: 'Отправить',
-              buttonOnTap: () {},
+              buttonOnTap: () {
+                pjNavigator(context, const NewPasswordScreenProvider());
+              },
               centerContainerContent: Column(
                 children: [
                   RichText(
@@ -50,16 +56,16 @@ class RestorePasswordCodeScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 10),
                   Text(
-                    'Введите код',
+                    'Введите код:',
                     style: PjTextStyles.abelRegular16.copyWith(
                       color: PjColors.gray2.withOpacity(0.85),
                     ),
                   ),
                   const SizedBox(height: 6),
-                  Container(
-                    height: 37,
-                    width: 90,
-                    color: Colors.red,
+                  IntrinsicWidth(
+                    child: PjTextFormField.pinCode(
+                      controller: _pinController,
+                    ),
                   ),
                 ],
               ),
