@@ -34,6 +34,7 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
   @override
   Widget build(BuildContext context) {
     return PjScaffold(
+      withWaves: true,
       body: BlocBuilder<CbNewPasswordScreen, StNewPasswordScreen>(
         builder: (context, state) {
           if (state is StNewPasswordScreenLoading) {

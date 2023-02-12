@@ -1,31 +1,71 @@
 import 'package:absolutest/utils/pj_colors.dart';
 import 'package:absolutest/utils/pj_styles.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class PjButton extends StatelessWidget {
+class PjButton extends StatefulWidget {
   final String text;
   final VoidCallback onTap;
+  final bool isProjectButton;
 
   const PjButton({
     Key? key,
     required this.text,
     required this.onTap,
-  }) : super(key: key);
+  })  : isProjectButton = false,
+        super(key: key);
 
+  const PjButton.project({
+    Key? key,
+    required this.text,
+    required this.onTap,
+  })  : isProjectButton = true,
+        super(key: key);
+
+  @override
+  State<PjButton> createState() => _PjButtonState();
+}
+
+class _PjButtonState extends State<PjButton> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        height: 50,
-        decoration: BoxDecoration(
-          color: PjColors.purple,
-          borderRadius: BorderRadius.circular(15),
-        ),
-        child: Center(
-          child: Text(
-            text,
-            style: PjTextStyles.abelRegular18.copyWith(color: Colors.white),
+      behavior: HitTestBehavior.translucent,
+      onTap: widget.onTap,
+      child: IntrinsicHeight(
+        child: Container(
+          padding:
+              EdgeInsets.symmetric(vertical: widget.isProjectButton ? 4 : 13),
+          decoration: BoxDecoration(
+            color: widget.isProjectButton
+                ? PjColors.whiteOpacity4
+                : PjColors.purple,
+            borderRadius:
+                BorderRadius.circular(widget.isProjectButton ? 8 : 15),
+            border: widget.isProjectButton
+                ? Border.all(color: PjColors.purple)
+                : null,
+            boxShadow: widget.isProjectButton
+                ? [
+                    const BoxShadow(
+                      blurRadius: 10,
+                      color: PjColors.shadow,
+                    )
+                  ]
+                : null,
+          ),
+          child: Center(
+            child: Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: widget.isProjectButton ? 13 : 0,
+              ),
+              child: Text(
+                widget.text,
+                style: widget.isProjectButton
+                    ? PjTextStyles.abelRegular11
+                    : PjTextStyles.abelRegular18.copyWith(color: Colors.white),
+              ),
+            ),
           ),
         ),
       ),

@@ -4,6 +4,7 @@ import 'package:absolutest/global_functions/pj_navigator.dart';
 import 'package:absolutest/global_widgets/pj_text_form_field.dart';
 import 'package:absolutest/global_widgets/pj_scaffold.dart';
 import 'package:absolutest/global_widgets/pj_tooltip.dart';
+import 'package:absolutest/screens/home_page_screen/home_page_screen_provider.dart';
 import 'package:absolutest/screens/restore_password_code_screen/restore_password_code_screen_provider.dart';
 import 'package:absolutest/utils/pj_colors.dart';
 import 'package:absolutest/utils/pj_styles.dart';
@@ -15,7 +16,7 @@ import 'cubit/st_login_screen.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class LoginScreen extends StatefulWidget {
-  LoginScreen({Key? key}) : super(key: key);
+  const LoginScreen({Key? key}) : super(key: key);
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
@@ -33,6 +34,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return PjScaffold(
+      withWaves: true,
       body: BlocBuilder<CbLoginScreen, StLoginScreen>(
         builder: (context, state) {
           if (state is StLoginScreenLoading) {
@@ -44,7 +46,12 @@ class _LoginScreenState extends State<LoginScreen> {
             return LoginScreensLayout(
               screenTitle: 'Вход',
               buttonText: 'Войти',
-              buttonOnTap: () {},
+              buttonOnTap: () {
+                pjNavigator(
+                  context,
+                  const HomePageScreenProvider(),
+                );
+              },
               centerContainerContent: Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -93,14 +100,16 @@ class _LoginScreenState extends State<LoginScreen> {
                   Align(
                     alignment: Alignment.bottomRight,
                     child: GestureDetector(
+                      behavior: HitTestBehavior.translucent,
                       onTap: () {
-                        if (emailValidatesErrors.isEmpty){
+                        if (emailValidatesErrors.isEmpty) {
                           pjNavigator(
                             context,
-                            RestorePasswordCodeScreenProvider(email: _emailController.text,),
+                            RestorePasswordCodeScreenProvider(
+                              email: _emailController.text,
+                            ),
                           );
-                        }
-                        else{
+                        } else {
                           setState(() {
                             isButtonTapped = true;
                           });

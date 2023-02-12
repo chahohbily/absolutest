@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:absolutest/global_widgets/glassmorphism_effect.dart';
 import 'package:absolutest/utils/pj_colors.dart';
 import 'package:absolutest/utils/pj_icons.dart';
 import 'package:absolutest/utils/pj_styles.dart';
@@ -34,25 +35,23 @@ class PjTooltip extends StatelessWidget {
         shadow: const Shadow(color: Colors.transparent),
         controller: tooltipController,
         borderRadius: BorderRadius.circular(13),
-        content: ClipRRect(
-          borderRadius: BorderRadius.circular(13),
-          child: BackdropFilter(
-            filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
-            child: Container(
-              decoration: BoxDecoration(
-                border: Border.all(color: PjColors.redError),
-                borderRadius: BorderRadius.circular(13),
-              ),
-              padding: const EdgeInsets.all(10),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: List.generate(
-                  errorsList.length,
-                  (index) => Text(
-                    errorsList[index],
-                    style: PjTextStyles.errorAbel11,
-                  ),
+        content: GlassMorphismEffect(
+          borderRadius: 13,
+          sigma: 5,
+          child: Container(
+            decoration: BoxDecoration(
+              border: Border.all(color: PjColors.redError),
+              borderRadius: BorderRadius.circular(13),
+            ),
+            padding: const EdgeInsets.all(10),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: List.generate(
+                errorsList.length,
+                (index) => Text(
+                  errorsList[index],
+                  style: PjTextStyles.errorAbel11,
                 ),
               ),
             ),
@@ -61,6 +60,7 @@ class PjTooltip extends StatelessWidget {
         child: Align(
           alignment: Alignment.bottomRight,
           child: GestureDetector(
+            behavior: HitTestBehavior.translucent,
             onTap: () {
               tooltipController.showTooltip();
             },

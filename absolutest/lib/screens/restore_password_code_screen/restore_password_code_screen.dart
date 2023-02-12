@@ -21,6 +21,7 @@ class RestorePasswordCodeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return PjScaffold(
+      withWaves: true,
       body:
           BlocBuilder<CbRestorePasswordCodeScreen, StRestorePasswordCodeScreen>(
         builder: (context, state) {
