@@ -14,4 +14,8 @@ class PjIcons {
   );
   final SvgPicture errorCircleRounded =
       SvgPicture.asset('assets/icons/error_circle_rounded.svg');
+  final SvgPicture nextArrow =
+  SvgPicture.asset('assets/icons/arrow_next.svg');
+  final SvgPicture account =
+  SvgPicture.asset('assets/icons/account.svg');
 }

@@ -32,6 +32,13 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
   List<String> passwordRepeatValidatesErrors = [];
 
   @override
+  void dispose() {
+    passwordTooltipController.dispose();
+    passwordRepeatTooltipController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return PjScaffold(
       withWaves: true,

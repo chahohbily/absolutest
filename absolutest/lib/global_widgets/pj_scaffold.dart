@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:absolutest/global_widgets/pj_app_bar.dart';
 import 'package:absolutest/utils/pj_gradients.dart';
 import 'package:absolutest/utils/pj_icons.dart';
 import 'package:flutter/material.dart';
@@ -7,11 +8,13 @@ import 'package:flutter/material.dart';
 class PjScaffold extends StatefulWidget {
   final Widget body;
   final bool withWaves;
+  final PjAppBar? appBar;
 
   const PjScaffold({
     Key? key,
     required this.body,
     this.withWaves = false,
+    this.appBar,
   }) : super(key: key);
 
   @override
@@ -41,6 +44,7 @@ class _PjScaffoldState extends State<PjScaffold> {
         child: Scaffold(
           resizeToAvoidBottomInset: false,
           backgroundColor: Colors.transparent,
+          appBar: widget.appBar,
           body: Stack(
             children: [
               if (widget.withWaves) ...[
@@ -76,7 +80,7 @@ class _PjScaffoldState extends State<PjScaffold> {
                 ),
               ],
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 30),
+                padding: const EdgeInsets.symmetric(horizontal: 25),
                 child: widget.body,
               ),
             ],

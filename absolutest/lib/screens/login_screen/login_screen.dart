@@ -32,6 +32,13 @@ class _LoginScreenState extends State<LoginScreen> {
   List<String> emailValidatesErrors = emailValidation('');
 
   @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordTooltipController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return PjScaffold(
       withWaves: true,
@@ -48,8 +55,9 @@ class _LoginScreenState extends State<LoginScreen> {
               buttonText: 'Войти',
               buttonOnTap: () {
                 pjNavigator(
-                  context,
-                  const HomePageScreenProvider(),
+                  context: context,
+                  nextScreenProvider: const HomePageScreenProvider(),
+                  isRemoveUntil: true,
                 );
               },
               centerContainerContent: Column(
@@ -104,8 +112,9 @@ class _LoginScreenState extends State<LoginScreen> {
                       onTap: () {
                         if (emailValidatesErrors.isEmpty) {
                           pjNavigator(
-                            context,
-                            RestorePasswordCodeScreenProvider(
+                            context: context,
+                            nextScreenProvider:
+                                RestorePasswordCodeScreenProvider(
                               email: _emailController.text,
                             ),
                           );

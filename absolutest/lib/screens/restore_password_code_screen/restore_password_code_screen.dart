@@ -35,7 +35,7 @@ class RestorePasswordCodeScreen extends StatelessWidget {
               screenTitle: 'Восстановление пароля',
               buttonText: 'Отправить',
               buttonOnTap: () {
-                pjNavigator(context, const NewPasswordScreenProvider());
+                pjNavigator(context: context, nextScreenProvider: const NewPasswordScreenProvider());
               },
               centerContainerContent: Column(
                 children: [
