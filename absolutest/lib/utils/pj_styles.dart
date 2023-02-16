@@ -31,6 +31,16 @@ class PjTextStyles {
     fontWeight: FontWeight.w400,
     color: PjColors.gray2
   );
+  static const TextStyle interMedium14 = TextStyle(
+      fontSize: 14,
+      fontWeight: FontWeight.w500,
+      color: PjColors.gray2
+  );
+  static const TextStyle interMedium18 = TextStyle(
+      fontSize: 18,
+      fontWeight: FontWeight.w500,
+      color: PjColors.gray2
+  );
   static const TextStyle interMedium16 = TextStyle(
       fontSize: 16,
       fontWeight: FontWeight.w500,

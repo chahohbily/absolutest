@@ -1,4 +1,5 @@
 import 'package:absolutest/utils/pj_colors.dart';
+import 'package:absolutest/utils/pj_icons.dart';
 import 'package:absolutest/utils/pj_styles.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -7,18 +8,21 @@ class PjButton extends StatefulWidget {
   final String text;
   final VoidCallback onTap;
   final bool isProjectButton;
+  final bool withIcon;
 
   const PjButton({
     Key? key,
     required this.text,
     required this.onTap,
   })  : isProjectButton = false,
+        withIcon = false,
         super(key: key);
 
   const PjButton.project({
     Key? key,
     required this.text,
     required this.onTap,
+    this.withIcon = false,
   })  : isProjectButton = true,
         super(key: key);
 
@@ -54,17 +58,24 @@ class _PjButtonState extends State<PjButton> {
                   ]
                 : null,
           ),
-          child: Center(
-            child: Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: widget.isProjectButton ? 13 : 0,
-              ),
-              child: Text(
-                widget.text,
-                style: widget.isProjectButton
-                    ? PjTextStyles.abelRegular11
-                    : PjTextStyles.abelRegular18.copyWith(color: Colors.white),
-              ),
+          child: Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: widget.isProjectButton ? 13 : 0,
+            ),
+            child: Column(
+              children: [
+                Text(
+                  widget.text,
+                  style: widget.isProjectButton
+                      ? PjTextStyles.abelRegular11
+                      : PjTextStyles.abelRegular18
+                          .copyWith(color: Colors.white),
+                ),
+                if (widget.withIcon) ...[
+                  const SizedBox(width: 5),
+                  PjIcons().plus,
+                ],
+              ],
             ),
           ),
         ),

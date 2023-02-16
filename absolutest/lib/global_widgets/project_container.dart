@@ -6,17 +6,29 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 class ProjectContainer extends StatelessWidget {
   final bool isPresentationContainer;
+  final bool isWithAvatar;
   final VoidCallback? callback;
 
   const ProjectContainer({
     Key? key,
     this.callback,
-  }) : isPresentationContainer = false, super(key: key);
+  })  : isPresentationContainer = false,
+        isWithAvatar = true,
+        super(key: key);
 
   const ProjectContainer.presentation({
     Key? key,
     this.callback,
-  }) : isPresentationContainer = true, super(key: key);
+  })  : isPresentationContainer = true,
+        isWithAvatar = true,
+        super(key: key);
+
+  const ProjectContainer.builds({
+    Key? key,
+    this.callback,
+  })  : isPresentationContainer = false,
+        isWithAvatar = false,
+        super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -43,34 +55,41 @@ class ProjectContainer extends StatelessWidget {
           child: IntrinsicHeight(
             child: Row(
               children: [
-                AspectRatio(
-                  aspectRatio: 1,
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 7.5),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(13),
-                      border: Border.all(color: PjColors.whiteOpacity3),
-                      color: PjColors.whiteOpacity5,
-                      boxShadow: const [
-                        BoxShadow(
-                          color: PjColors.shadow,
-                          blurRadius: 6.21,
-                        )
-                      ],
-                    ),
-                    child: SvgPicture.asset(
-                      'assets/icons/logo.svg',
-                      height: 1,
+                if (isWithAvatar)
+                  AspectRatio(
+                    aspectRatio: 1,
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 7.5),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(13),
+                        border: Border.all(color: PjColors.whiteOpacity3),
+                        color: PjColors.whiteOpacity5,
+                        boxShadow: const [
+                          BoxShadow(
+                            color: PjColors.shadow,
+                            blurRadius: 6.21,
+                          )
+                        ],
+                      ),
+                      child: SvgPicture.asset(
+                        'assets/icons/logo.svg',
+                        height: 1,
+                      ),
                     ),
                   ),
-                ),
                 const SizedBox(width: 10),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
+                    Text(
                       'Instagram',
-                      style: PjTextStyles.interRegular14,
+                      style: isPresentationContainer
+                          ? PjTextStyles.interMedium18
+                          : PjTextStyles.interRegular14.copyWith(
+                              fontWeight: isWithAvatar
+                                  ? FontWeight.w500
+                                  : FontWeight.w400,
+                            ),
                     ),
                     const SizedBox(height: 4),
                     Text(
