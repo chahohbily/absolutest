@@ -10,7 +10,7 @@ class LoginScreenProvider extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider<CbLoginScreen>(
       create: (context) => CbLoginScreen(),
-      child: LoginScreen(),
+      child: const LoginScreen(),
     );
   }
 }    

@@ -1,17 +1,16 @@
-import 'st_login_screen.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+
+part 'cb_login_screen.freezed.dart';
 
 class CbLoginScreen extends Cubit<StLoginScreen> {
-  CbLoginScreen() : super(StLoginScreenLoaded());
-  
-  // Future<void> getData() async {
-  // try {
-  //     Map<String, dynamic> response =
-  //         await Api.get(method: 'method', testMode: true);
-  //     emit(StLoginScreenLoaded());
-  //   } on APIException catch (e) {
-  //     emit(StLoginScreenError(error: e.code));
-  //   }
-  // }
+  CbLoginScreen() : super(const StLoginScreen.loaded());
+}
+
+@freezed
+abstract class StLoginScreen with _$StLoginScreen {
+  const factory StLoginScreen.loading() = _Loading;
+  const factory StLoginScreen.error(int? error, String? message) = _Error;
+  const factory StLoginScreen.loaded() = _Loaded;
 }
     

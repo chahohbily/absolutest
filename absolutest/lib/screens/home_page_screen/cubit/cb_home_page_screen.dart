@@ -1,17 +1,16 @@
-import 'st_home_page_screen.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-class CbHomePageScreen extends Cubit<StHomePageScreen> {
-  CbHomePageScreen() : super(StHomePageScreenLoaded());
-  
-  // Future<void> getData() async {
-  // try {
-  //     Map<String, dynamic> response =
-  //         await Api.get(method: 'method', testMode: true);
-  //     emit(StHomePageScreenLoaded());
-  //   } on APIException catch (e) {
-  //     emit(StHomePageScreenError(error: e.code));
-  //   }
-  // }
+part 'cb_home_page_screen.freezed.dart';
+
+class CbHomeScreen extends Cubit<StHomeScreen> {
+  CbHomeScreen() : super(const StHomeScreen.loaded());
+}
+
+@freezed
+abstract class StHomeScreen with _$StHomeScreen {
+  const factory StHomeScreen.loading() = _Loading;
+  const factory StHomeScreen.error(int? error, String? message) = _Error;
+  const factory StHomeScreen.loaded() = _Loaded;
 }
     

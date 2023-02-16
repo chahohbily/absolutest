@@ -9,9 +9,7 @@ import 'package:absolutest/utils/pj_colors.dart';
 import 'package:absolutest/utils/pj_icons.dart';
 import 'package:absolutest/utils/pj_styles.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'cubit/cb_project_page_screen.dart';
-import 'cubit/st_project_page_screen.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ProjectPageScreen extends StatelessWidget {
@@ -74,55 +72,48 @@ class ProjectPageScreen extends StatelessWidget {
     return PjScaffold(
       appBar: const PjAppBar(),
       body: BlocBuilder<CbProjectPageScreen, StProjectPageScreen>(
-        builder: (context, state) {
-          if (state is StProjectPageScreenLoading) {
-            return const Center(
-              child: CupertinoActivityIndicator(),
-            );
-          }
-          if (state is StProjectPageScreenLoaded) {
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(height: 10),
-                const ProjectContainer.presentation(),
-                const SizedBox(height: 20),
-                const TextAndTitle(
-                  title: 'Заметки о тестировании',
-                  text: 'Тестирование тестирование тестирование',
-                ),
-                const SizedBox(height: 20),
-                const Text(
-                  'Информация о приложении',
-                  style: PjTextStyles.interMedium16,
-                ),
-                _buildTextRow(
-                    text: 'Сведения о приложении',
-                    onTap: () {
-                      pjNavigator(
-                        context: context,
-                        nextScreenProvider: const AboutProjectScreenProvider(),
-                      );
-                    }),
-                _buildTextRow(
-                  text: 'Автоматическое обновление',
-                  isWithIcon: false,
-                ),
-                _buildTextRow(
-                  text: 'Уведомления',
-                ),
-                _buildTextRow(
-                  text: 'Предыдущие версии',
-                  version: '1.0.0 (6)',
-                ),
-              ],
-            );
-          }
-          if (state is StProjectPageScreenError) {
-            return Container(color: Colors.red);
-          }
-          return Container(color: Colors.grey);
-        },
+        builder: (context, state) => state.when(
+          loading: () => const Center(
+            child: CupertinoActivityIndicator(),
+          ),
+          error: (code, message) => const Placeholder(),
+          loaded: () => Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(height: 10),
+              const ProjectContainer.presentation(),
+              const SizedBox(height: 20),
+              const TextAndTitle(
+                title: 'Заметки о тестировании',
+                text: 'Тестирование тестирование тестирование',
+              ),
+              const SizedBox(height: 20),
+              const Text(
+                'Информация о приложении',
+                style: PjTextStyles.interMedium16,
+              ),
+              _buildTextRow(
+                  text: 'Сведения о приложении',
+                  onTap: () {
+                    pjNavigator(
+                      context: context,
+                      nextScreenProvider: const AboutProjectScreenProvider(),
+                    );
+                  }),
+              _buildTextRow(
+                text: 'Автоматическое обновление',
+                isWithIcon: false,
+              ),
+              _buildTextRow(
+                text: 'Уведомления',
+              ),
+              _buildTextRow(
+                text: 'Предыдущие версии',
+                version: '1.0.0 (6)',
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
