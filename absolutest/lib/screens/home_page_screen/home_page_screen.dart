@@ -1,13 +1,14 @@
-import 'package:absolutest/global_functions/pj_navigator.dart';
+import 'package:absolutest/global_widgets/logo_animation.dart';
 import 'package:absolutest/global_widgets/pj_app_bar.dart';
 import 'package:absolutest/global_widgets/project_container.dart';
 import 'package:absolutest/global_widgets/pj_scaffold.dart';
-import 'package:absolutest/screens/project_page_screen/project_page_screen_provider.dart';
+import 'package:absolutest/utils/app_router.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/cupertino.dart';
 import 'cubit/cb_home_page_screen.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatelessWidget implements AutoRouteWrapper{
   const HomeScreen({Key? key}) : super(key: key);
 
   @override
@@ -16,9 +17,7 @@ class HomeScreen extends StatelessWidget {
       appBar: const PjAppBar.homePage(title: 'Проекты'),
       body: BlocBuilder<CbHomeScreen, StHomeScreen>(
         builder: (context, state) => state.when(
-          loading: () => const Center(
-            child: CupertinoActivityIndicator(),
-          ),
+          loading: () => const LogoAnimation(),
           error: (code, message) => const Placeholder(),
           loaded: () => ListView.builder(
             itemCount: 3,
@@ -31,10 +30,7 @@ class HomeScreen extends StatelessWidget {
                 padding: const EdgeInsets.only(bottom: 10),
                 child: ProjectContainer(
                   callback: () {
-                    pjNavigator(
-                      context: context,
-                      nextScreenProvider: const ProjectPageScreenProvider(),
-                    );
+                    context.router.push(const ProjectPageScreenRoute());
                   },
                 ),
               );
@@ -42,6 +38,14 @@ class HomeScreen extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+
+  @override
+  Widget wrappedRoute(BuildContext context) {
+    return BlocProvider<CbHomeScreen>(
+      create: (context) => CbHomeScreen(),
+      child: this,
     );
   }
 }

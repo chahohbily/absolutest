@@ -1,15 +1,17 @@
 import 'dart:developer';
 
+import 'package:absolutest/global_widgets/logo_animation.dart';
 import 'package:absolutest/global_widgets/pj_app_bar.dart';
 import 'package:absolutest/global_widgets/pj_scaffold.dart';
 import 'package:absolutest/global_widgets/title_and_text.dart';
 import 'package:absolutest/utils/pj_colors.dart';
 import 'package:absolutest/utils/pj_styles.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/cupertino.dart';
 import 'cubit/cb_about_project_screen.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class AboutProjectScreen extends StatelessWidget {
+class AboutProjectScreen extends StatelessWidget implements AutoRouteWrapper{
   const AboutProjectScreen({Key? key})
       : tableTitles = const [
           'Разработчик',
@@ -28,9 +30,7 @@ class AboutProjectScreen extends StatelessWidget {
       appBar: const PjAppBar(title: 'Сведения о приложении'),
       body: BlocBuilder<CbAboutProjectScreen, StAboutProjectScreen>(
         builder: (context, state) => state.when(
-          loading: () => const Center(
-            child: CupertinoActivityIndicator(),
-          ),
+          loading: () => const LogoAnimation(),
           error: (code, message) => const Placeholder(),
           loaded: () => Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -83,6 +83,14 @@ class AboutProjectScreen extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+
+  @override
+  Widget wrappedRoute(BuildContext context) {
+    return BlocProvider<CbAboutProjectScreen>(
+      create: (context) => CbAboutProjectScreen(),
+      child: this,
     );
   }
 }

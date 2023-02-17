@@ -1,19 +1,19 @@
-import 'package:absolutest/global_functions/pj_navigator.dart';
+import 'package:absolutest/global_widgets/logo_animation.dart';
 import 'package:absolutest/global_widgets/pj_app_bar.dart';
 import 'package:absolutest/global_widgets/pj_divider.dart';
 import 'package:absolutest/global_widgets/pj_scaffold.dart';
 import 'package:absolutest/global_widgets/project_container.dart';
 import 'package:absolutest/global_widgets/title_and_text.dart';
-import 'package:absolutest/screens/about_project_screen/about_project_screen_provider.dart';
-import 'package:absolutest/screens/versions_screen/versions_screen_provider.dart';
+import 'package:absolutest/utils/app_router.dart';
 import 'package:absolutest/utils/pj_colors.dart';
 import 'package:absolutest/utils/pj_icons.dart';
 import 'package:absolutest/utils/pj_styles.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/cupertino.dart';
 import 'cubit/cb_project_page_screen.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class ProjectPageScreen extends StatelessWidget {
+class ProjectPageScreen extends StatelessWidget implements AutoRouteWrapper {
   const ProjectPageScreen({Key? key}) : super(key: key);
 
   Widget _buildTextRow({
@@ -74,9 +74,7 @@ class ProjectPageScreen extends StatelessWidget {
       appBar: const PjAppBar(),
       body: BlocBuilder<CbProjectPageScreen, StProjectPageScreen>(
         builder: (context, state) => state.when(
-          loading: () => const Center(
-            child: CupertinoActivityIndicator(),
-          ),
+          loading: () => const LogoAnimation(),
           error: (code, message) => const Placeholder(),
           loaded: () => Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -96,10 +94,7 @@ class ProjectPageScreen extends StatelessWidget {
               _buildTextRow(
                   text: 'Сведения о приложении',
                   onTap: () {
-                    pjNavigator(
-                      context: context,
-                      nextScreenProvider: const AboutProjectScreenProvider(),
-                    );
+                    context.router.push(const AboutProjectScreenRoute());
                   }),
               _buildTextRow(
                 text: 'Автоматическое обновление',
@@ -112,16 +107,21 @@ class ProjectPageScreen extends StatelessWidget {
                 text: 'Предыдущие версии',
                 version: '1.0.0 (6)',
                 onTap: () {
-                  pjNavigator(
-                    context: context,
-                    nextScreenProvider: const VersionsScreenProvider(),
-                  );
+                  context.router.push(const VersionsScreenRoute());
                 },
               ),
             ],
           ),
         ),
       ),
+    );
+  }
+
+  @override
+  Widget wrappedRoute(BuildContext context) {
+    return BlocProvider<CbProjectPageScreen>(
+      create: (context) => CbProjectPageScreen(),
+      child: this,
     );
   }
 }

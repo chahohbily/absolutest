@@ -1,23 +1,31 @@
 import 'package:absolutest/global_functions/validator.dart';
 import 'package:absolutest/global_widgets/login_screens_layout.dart';
-import 'package:absolutest/global_functions/pj_navigator.dart';
+import 'package:absolutest/global_widgets/logo_animation.dart';
 import 'package:absolutest/global_widgets/pj_text_form_field.dart';
 import 'package:absolutest/global_widgets/pj_scaffold.dart';
 import 'package:absolutest/global_widgets/pj_tooltip.dart';
-import 'package:absolutest/screens/home_page_screen/home_page_screen_provider.dart';
-import 'package:absolutest/screens/restore_password_code_screen/restore_password_code_screen_provider.dart';
+import 'package:absolutest/utils/app_router.dart';
 import 'package:absolutest/utils/pj_colors.dart';
 import 'package:absolutest/utils/pj_styles.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:just_the_tooltip/just_the_tooltip.dart';
 import 'cubit/cb_login_screen.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class LoginScreen extends StatefulWidget {
+class LoginScreen extends StatefulWidget implements AutoRouteWrapper {
   const LoginScreen({Key? key}) : super(key: key);
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
+
+  @override
+  Widget wrappedRoute(BuildContext context) {
+    return BlocProvider<CbLoginScreen>(
+      create: (context) => CbLoginScreen(),
+      child: this,
+    );
+  }
 }
 
 class _LoginScreenState extends State<LoginScreen> {
@@ -42,19 +50,13 @@ class _LoginScreenState extends State<LoginScreen> {
       withWaves: true,
       body: BlocBuilder<CbLoginScreen, StLoginScreen>(
         builder: (context, state) => state.when(
-          loading: () => const Center(
-            child: CupertinoActivityIndicator(),
-          ),
+          loading: () => const LogoAnimation(),
           error: (code, message) => const Placeholder(),
           loaded: () => LoginScreensLayout(
             screenTitle: 'Вход',
             buttonText: 'Войти',
             buttonOnTap: () {
-              pjNavigator(
-                context: context,
-                nextScreenProvider: const HomeScreenProvider(),
-                isRemoveUntil: true,
-              );
+              context.router.replaceAll([const HomeScreenRoute()]);
             },
             centerContainerContent: Column(
               mainAxisSize: MainAxisSize.min,
@@ -107,11 +109,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     behavior: HitTestBehavior.translucent,
                     onTap: () {
                       if (emailValidatesErrors.isEmpty) {
-                        pjNavigator(
-                          context: context,
-                          nextScreenProvider: RestorePasswordCodeScreenProvider(
-                            email: _emailController.text,
-                          ),
+                        context.router.push(
+                          RestorePasswordCodeScreenRoute(
+                              email: _emailController.text),
                         );
                       } else {
                         setState(() {

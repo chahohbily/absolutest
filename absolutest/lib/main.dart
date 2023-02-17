@@ -1,5 +1,5 @@
-import 'package:absolutest/screens/login_screen/login_screen_provider.dart';
 import 'package:absolutest/screens/splash_screen.dart';
+import 'package:absolutest/utils/app_router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -10,20 +10,24 @@ void main() {
     statusBarBrightness: Brightness.light,
     systemNavigationBarColor: Colors.transparent,
   ));
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  MyApp({super.key});
+
+  final _appRouter = AppRouter();
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const SplashScreen(),
+      routerDelegate: _appRouter.delegate(),
+      routeInformationParser: _appRouter.defaultRouteParser(),
+      //home: const SplashScreen(),
     );
   }
 }

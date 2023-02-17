@@ -1,20 +1,30 @@
 import 'package:absolutest/global_functions/validator.dart';
 import 'package:absolutest/global_widgets/login_screens_layout.dart';
+import 'package:absolutest/global_widgets/logo_animation.dart';
 import 'package:absolutest/global_widgets/pj_scaffold.dart';
 import 'package:absolutest/global_widgets/pj_text_form_field.dart';
 import 'package:absolutest/global_widgets/pj_tooltip.dart';
 import 'package:absolutest/utils/pj_colors.dart';
 import 'package:absolutest/utils/pj_styles.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:just_the_tooltip/just_the_tooltip.dart';
 import 'cubit/cb_new_password_screen.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class NewPasswordScreen extends StatefulWidget {
+class NewPasswordScreen extends StatefulWidget implements AutoRouteWrapper{
   const NewPasswordScreen({Key? key}) : super(key: key);
 
   @override
   State<NewPasswordScreen> createState() => _NewPasswordScreenState();
+
+  @override
+  Widget wrappedRoute(BuildContext context) {
+    return BlocProvider<CbNewPasswordScreen>(
+      create: (context) => CbNewPasswordScreen(),
+      child: this,
+    );
+  }
 }
 
 class _NewPasswordScreenState extends State<NewPasswordScreen> {
@@ -41,9 +51,7 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
       withWaves: true,
       body: BlocBuilder<CbNewPasswordScreen, StNewPasswordScreen>(
         builder: (context, state) => state.when(
-          loading: () => const Center(
-            child: CupertinoActivityIndicator(),
-          ),
+          loading: () => const LogoAnimation(),
           error: (code, message) => const Placeholder(),
           loaded: () => LoginScreensLayout(
             screenTitle: 'Восстановление пароля',

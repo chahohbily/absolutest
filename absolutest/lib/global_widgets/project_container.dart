@@ -3,6 +3,7 @@ import 'package:absolutest/utils/pj_colors.dart';
 import 'package:absolutest/utils/pj_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:zoom_tap_animation/zoom_tap_animation.dart';
 
 class ProjectContainer extends StatelessWidget {
   final bool isPresentationContainer;
@@ -32,8 +33,8 @@ class ProjectContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      behavior: HitTestBehavior.translucent,
+    return ZoomTapAnimation(
+      //behavior: HitTestBehavior.translucent,
       onTap: callback ?? () {},
       child: Container(
         decoration: BoxDecoration(
