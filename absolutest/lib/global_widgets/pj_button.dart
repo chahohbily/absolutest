@@ -62,7 +62,8 @@ class _PjButtonState extends State<PjButton> {
             padding: EdgeInsets.symmetric(
               horizontal: widget.isProjectButton ? 13 : 0,
             ),
-            child: Column(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
                   widget.text,

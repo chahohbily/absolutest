@@ -1,17 +1,17 @@
 import 'dart:developer';
 
-import 'package:absolutest/global_functions/pj_navigator.dart';
 import 'package:absolutest/global_widgets/pj_app_bar.dart';
 import 'package:absolutest/global_widgets/pj_scaffold.dart';
-import 'package:absolutest/screens/builds_screen/builds_screen_provider.dart';
+import 'package:absolutest/utils/app_router.dart';
 import 'package:absolutest/utils/pj_colors.dart';
 import 'package:absolutest/utils/pj_icons.dart';
 import 'package:absolutest/utils/pj_styles.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/cupertino.dart';
 import 'cubit/cb_versions_screen.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class VersionsScreen extends StatelessWidget {
+class VersionsScreen extends StatelessWidget implements AutoRouteWrapper{
   const VersionsScreen({Key? key}) : super(key: key);
 
   @override
@@ -19,21 +19,17 @@ class VersionsScreen extends StatelessWidget {
     return PjScaffold(
       appBar: const PjAppBar(title: 'Версии'),
       body: BlocBuilder<CbVersionsScreen, StVersionsScreen>(
-        builder: (context, state) => state.when(
+        builder: (ctx, state) => state.when(
           loading: () => const Center(
             child: CupertinoActivityIndicator(),
           ),
           error: (code, message) => const Placeholder(),
           loaded: () => ListView.builder(
             itemCount: 8,
-            itemBuilder: (context, index) => GestureDetector(
+            itemBuilder: (ctx, index) => GestureDetector(
               behavior: HitTestBehavior.translucent,
               onTap: () {
-                pjNavigator(
-                  context: context,
-                  nextScreenProvider: const BuildsScreenProvider(),
-                );
-                log('message');
+                context.router.push(const BuildsScreenRoute());
               },
               child: Container(
                 padding: const EdgeInsets.symmetric(vertical: 13),
@@ -69,6 +65,14 @@ class VersionsScreen extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+
+  @override
+  Widget wrappedRoute(BuildContext context) {
+    return BlocProvider<CbVersionsScreen>(
+      create: (context) => CbVersionsScreen(),
+      child: this,
     );
   }
 }
