@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:absolutest/global_widgets/logo_animation.dart';
 import 'package:absolutest/global_widgets/pj_app_bar.dart';
 import 'package:absolutest/global_widgets/pj_scaffold.dart';
 import 'package:absolutest/utils/app_router.dart';
@@ -20,9 +21,7 @@ class VersionsScreen extends StatelessWidget implements AutoRouteWrapper{
       appBar: const PjAppBar(title: 'Версии'),
       body: BlocBuilder<CbVersionsScreen, StVersionsScreen>(
         builder: (ctx, state) => state.when(
-          loading: () => const Center(
-            child: CupertinoActivityIndicator(),
-          ),
+          loading: () => const LogoAnimation(),
           error: (code, message) => const Placeholder(),
           loaded: () => ListView.builder(
             itemCount: 8,

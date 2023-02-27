@@ -31,6 +31,23 @@ class PjButton extends StatefulWidget {
 }
 
 class _PjButtonState extends State<PjButton> {
+  late final double verticalPadding;
+
+  @override
+  void initState() {
+    if (widget.isProjectButton){
+      if (widget.withIcon){
+        verticalPadding = 6;
+      }
+      else{
+        verticalPadding = 4;
+      }
+    }
+    else{
+      verticalPadding = 13;
+    }
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -39,7 +56,7 @@ class _PjButtonState extends State<PjButton> {
       child: IntrinsicHeight(
         child: Container(
           padding:
-              EdgeInsets.symmetric(vertical: widget.isProjectButton ? 4 : 13),
+              EdgeInsets.symmetric(vertical: verticalPadding),
           decoration: BoxDecoration(
             color: widget.isProjectButton
                 ? PjColors.whiteOpacity4
@@ -63,6 +80,8 @@ class _PjButtonState extends State<PjButton> {
               horizontal: widget.isProjectButton ? 13 : 0,
             ),
             child: Row(
+              mainAxisSize:
+                  widget.withIcon ? MainAxisSize.min : MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(

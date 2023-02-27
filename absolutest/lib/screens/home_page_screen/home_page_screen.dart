@@ -8,7 +8,7 @@ import 'package:flutter/cupertino.dart';
 import 'cubit/cb_home_page_screen.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class HomeScreen extends StatelessWidget implements AutoRouteWrapper{
+class HomeScreen extends StatelessWidget implements AutoRouteWrapper {
   const HomeScreen({Key? key}) : super(key: key);
 
   @override

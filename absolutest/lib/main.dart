@@ -1,4 +1,3 @@
-import 'package:absolutest/screens/splash_screen.dart';
 import 'package:absolutest/utils/app_router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:absolutest/global_functions/validator.dart';
 import 'package:absolutest/global_widgets/glassmorphism_effect.dart';
 import 'package:absolutest/utils/pj_colors.dart';
@@ -11,6 +9,7 @@ enum TextFieldType {
   TEXT,
   PASSWORD,
   EMAIL,
+  BIG,
 }
 
 class PjTextFormField extends StatefulWidget {
@@ -51,6 +50,14 @@ class PjTextFormField extends StatefulWidget {
   })  : type = TextFieldType.EMAIL,
         super(key: key);
 
+  const PjTextFormField.big({
+    Key? key,
+    required this.controller,
+    this.callback,
+  })  : type = TextFieldType.BIG,
+        isButtonTapped = false,
+        super(key: key);
+
   @override
   State<PjTextFormField> createState() => _PjTextFormFieldState();
 }
@@ -68,6 +75,15 @@ class _PjTextFormFieldState extends State<PjTextFormField> {
   }
 
   bool isValidate = true;
+  int? maxLines;
+
+  @override
+  void initState() {
+    if (widget.type == TextFieldType.BIG) {
+      maxLines = 4;
+    }
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -79,7 +95,9 @@ class _PjTextFormFieldState extends State<PjTextFormField> {
         cursorHeight: 19,
         obscureText: widget.type == TextFieldType.PASSWORD ? true : false,
         textAlign: TextAlign.start,
-        scrollPhysics: const NeverScrollableScrollPhysics(),
+        scrollPhysics: widget.type == TextFieldType.BIG
+            ? null
+            : const NeverScrollableScrollPhysics(),
         style: PjTextStyles.abelRegular16.copyWith(
           letterSpacing: widget.type == TextFieldType.PIN_CODE
               ? MediaQuery.of(context).size.width / 42
@@ -87,6 +105,7 @@ class _PjTextFormFieldState extends State<PjTextFormField> {
         ),
         cursorColor: PjColors.gray.withOpacity(0.85),
         maxLength: widget.type == TextFieldType.PIN_CODE ? 4 : null,
+        maxLines: widget.type == TextFieldType.BIG ? 4 : null,
         decoration: InputDecoration(
           filled: true,
           hintText: widget.type == TextFieldType.PIN_CODE ? '0000' : null,
@@ -106,6 +125,11 @@ class _PjTextFormFieldState extends State<PjTextFormField> {
           if (isValidate != validation(text, widget.type)) {
             setState(() {
               isValidate = !isValidate;
+            });
+          }
+          if (widget.type == TextFieldType.BIG && text.length > 125) {
+            setState(() {
+              maxLines = null;
             });
           }
           if (widget.callback != null) {

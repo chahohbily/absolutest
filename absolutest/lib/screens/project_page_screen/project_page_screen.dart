@@ -1,5 +1,6 @@
 import 'package:absolutest/global_widgets/logo_animation.dart';
 import 'package:absolutest/global_widgets/pj_app_bar.dart';
+import 'package:absolutest/global_widgets/pj_button.dart';
 import 'package:absolutest/global_widgets/pj_divider.dart';
 import 'package:absolutest/global_widgets/pj_scaffold.dart';
 import 'package:absolutest/global_widgets/project_container.dart';
@@ -76,39 +77,55 @@ class ProjectPageScreen extends StatelessWidget implements AutoRouteWrapper {
         builder: (context, state) => state.when(
           loading: () => const LogoAnimation(),
           error: (code, message) => const Placeholder(),
-          loaded: () => Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          loaded: () => Stack(
             children: [
-              const SizedBox(height: 10),
-              const ProjectContainer.presentation(),
-              const SizedBox(height: 20),
-              const TextAndTitle(
-                title: 'Заметки о тестировании',
-                text: 'Тестирование тестирование тестирование',
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(height: 10),
+                  const ProjectContainer.presentation(),
+                  const SizedBox(height: 20),
+                  const TextAndTitle(
+                    title: 'Заметки о тестировании',
+                    text: 'Тестирование тестирование тестирование',
+                  ),
+                  const SizedBox(height: 20),
+                  const Text(
+                    'Информация о приложении',
+                    style: PjTextStyles.interMedium16,
+                  ),
+                  _buildTextRow(
+                      text: 'Сведения о приложении',
+                      onTap: () {
+                        context.router.push(const AboutProjectScreenRoute());
+                      }),
+                  _buildTextRow(
+                    text: 'Автоматическое обновление',
+                    isWithIcon: false,
+                  ),
+                  _buildTextRow(
+                    text: 'Уведомления',
+                  ),
+                  _buildTextRow(
+                    text: 'Предыдущие версии',
+                    version: '1.0.0 (6)',
+                    onTap: () {
+                      context.router.push(const VersionsScreenRoute());
+                    },
+                  ),
+                ],
               ),
-              const SizedBox(height: 20),
-              const Text(
-                'Информация о приложении',
-                style: PjTextStyles.interMedium16,
-              ),
-              _buildTextRow(
-                  text: 'Сведения о приложении',
-                  onTap: () {
-                    context.router.push(const AboutProjectScreenRoute());
-                  }),
-              _buildTextRow(
-                text: 'Автоматическое обновление',
-                isWithIcon: false,
-              ),
-              _buildTextRow(
-                text: 'Уведомления',
-              ),
-              _buildTextRow(
-                text: 'Предыдущие версии',
-                version: '1.0.0 (6)',
-                onTap: () {
-                  context.router.push(const VersionsScreenRoute());
-                },
+              Padding(
+                padding: const EdgeInsets.only(bottom: 100),
+                child: Align(
+                  alignment: Alignment.bottomCenter,
+                  child: PjButton(
+                    text: 'Добавить отчет',
+                    onTap: () {
+                      context.router.push(const ReportScreenRoute());
+                    },
+                  ),
+                ),
               ),
             ],
           ),

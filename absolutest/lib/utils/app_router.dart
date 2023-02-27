@@ -15,15 +15,15 @@ part 'app_router.gr.dart';
 @MaterialAutoRouter(
   replaceInRouteName: 'Page,Route,Screen,Provider',
   routes: <AutoRoute>[
-    AutoRoute(page: LoginScreen, initial: true),
-    AutoRoute(page: HomeScreen),
-    AutoRoute(page: NewPasswordScreen),
-    AutoRoute(page: RestorePasswordCodeScreen),
-    AutoRoute(page: ProjectPageScreen),
-    AutoRoute(page: AboutProjectScreen),
-    AutoRoute(page: BuildsScreen),
-    AutoRoute(page: ReportScreen),
-    AutoRoute(page: VersionsScreen),
+    CupertinoRoute(page: LoginScreen, initial: true),
+    CupertinoRoute(page: HomeScreen),
+    CupertinoRoute(page: NewPasswordScreen),
+    CupertinoRoute(page: RestorePasswordCodeScreen),
+    CupertinoRoute(page: ProjectPageScreen),
+    CupertinoRoute(page: AboutProjectScreen),
+    CupertinoRoute(page: BuildsScreen),
+    CupertinoRoute(page: ReportScreen),
+    CupertinoRoute(page: VersionsScreen),
   ],
 )
 // extend the generated private router

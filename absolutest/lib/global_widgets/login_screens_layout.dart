@@ -25,9 +25,6 @@ class LoginScreensLayout extends StatefulWidget {
 }
 
 class _LoginScreensLayoutState extends State<LoginScreensLayout> {
-  late final double bottomButtonPadding =
-      MediaQuery.of(context).size.height / 8;
-
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -36,7 +33,7 @@ class _LoginScreensLayoutState extends State<LoginScreensLayout> {
         children: [
           Center(
             child: Padding(
-              padding: EdgeInsets.only(bottom: bottomButtonPadding),
+              padding: const EdgeInsets.only(bottom: 100),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -69,9 +66,7 @@ class _LoginScreensLayoutState extends State<LoginScreensLayout> {
             ),
           ),
           Padding(
-            padding: EdgeInsets.only(
-              bottom: bottomButtonPadding,
-            ),
+            padding: const EdgeInsets.only(bottom: 100),
             child: Align(
               alignment: Alignment.bottomCenter,
               child: PjButton(
